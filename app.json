@@ -18,21 +18,6 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
-    },
-    "web": {
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      [
-        "expo-font",
-        {
-          "fonts": [
-            "./assets/fonts/Inter-Bold.ttf",
-            "./assets/fonts/Roboto-MediumItalic.ttf",
-            "./assets/fonts/Roboto-Medium.ttf"
-          ]
-        }
-      ]
-    ]
+    }
   }
 }

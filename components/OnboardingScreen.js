@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useCallback } from "react";
-import { SafeAreaView, TouchableOpacity, View, Text } from "react-native";
+import { SafeAreaView, TouchableOpacity, View, Text, Image } from "react-native";
 
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -43,17 +43,17 @@ function OnboardingScreen({ navigation }) {
             fontWeight: "bold",
             fontSize: 30,
             color: "#20315f",
+            zIndex:1,
           }}
         >
           KickOff Crew
         </Text>
       </View>
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Gaming
-          width={300}
-          height={300}
-          style={{ transform: [{ rotate: "-15deg" }] }}
-        />
+      <Image source={require('../assets/images/basketball.jpg')}
+            
+            style={{ left:-48, bottom:10}}
+          />
       </View>
       <TouchableOpacity
         style={{

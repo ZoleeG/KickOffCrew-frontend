@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 
-import RegistrationSVG from "./svgs/Registration";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -20,7 +19,7 @@ function RegisterScreen({ navigation }) {
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setDate(currentDate);
-    setdobLabel(date.toLocaleDateString());
+    setdobLabel(currentDate.toLocaleDateString());
   };
 
   const showMode = (currentMode) => {
@@ -31,7 +30,7 @@ function RegisterScreen({ navigation }) {
       display: "spinner",
       is24Hour: true,
       maximumDate: new Date(),
-      minimumDate: new Date("1980-01-01"),
+      minimumDate: new Date("1920-01-01"),
     });
   };
 
@@ -47,13 +46,12 @@ function RegisterScreen({ navigation }) {
     <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ paddingHorizontal: 25 }}
+        style={{  }}
       >
         <View style={{ alignItems: "center" }}>
-          <RegistrationSVG
-            height={300}
-            width={300}
-            style={{ tranform: [{ rotate: "-5deg" }] }}
+          <Image
+            source={require("../assets/images/badminton.jpg")}
+            style={{}}
           />
         </View>
         <Text
@@ -63,6 +61,7 @@ function RegisterScreen({ navigation }) {
             fontWeight: "500",
             color: "#333",
             marginBottom: 30,
+            paddingHorizontal: 25
           }}
         >
           Register
@@ -73,6 +72,7 @@ function RegisterScreen({ navigation }) {
             flexDirection: "row",
             justifyContent: "space-between",
             marginBottom: 30,
+            paddingHorizontal: 25
           }}
         >
           <TouchableOpacity
@@ -117,12 +117,13 @@ function RegisterScreen({ navigation }) {
           style={{
             justifyContent: "center",
             marginBottom: 30,
+            paddingHorizontal: 25
           }}
         >
           <Text
             style={{ textAlign: "center", color: "#666", marginBottom: 30 }}
           >
-            Register with email ...
+            Or Sign Up with your email ...
           </Text>
 
           <InputField
@@ -200,7 +201,13 @@ function RegisterScreen({ navigation }) {
 
           <CustomButton label={"Register"} onPress={() => {}} />
 
-          <View style={{ flexDirection: "row", justifyContent: "center", marginBottom:30 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              marginBottom: 30,
+            }}
+          >
             <Text>Already registered? </Text>
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Text style={{ color: "#AD40AF", fontWeight: "700" }}>Login</Text>

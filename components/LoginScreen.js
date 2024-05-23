@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import InputField from "./InputField";
 
 import LoginSVG from "./svgs/LoginSVG";
@@ -11,7 +11,7 @@ import GoogleSVG from "./svgs/GoogleSVG";
 import TwitterSVG from "./svgs/TwitterSVG";
 import CustomButton from "./CustomButton";
 
-import { FontDisplay, useFonts } from "expo-font";
+import {useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 
@@ -33,13 +33,15 @@ function LoginScreen({ navigation }) {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: "center" }} onLayout={onLayoutRootView}>
+    <SafeAreaView
+      style={{ flex: 1, justifyContent: "center" }}
+      onLayout={onLayoutRootView}
+    >
       <View style={{ paddingHorizontal: 25 }}>
         <View style={{ alignItems: "center" }}>
-          <LoginSVG
-            height={300}
-            width={300}
-            style={{ tranform: [{ rotate: "-5deg" }] }}
+          <Image source={require('../assets/images/volleyball.jpg')}
+            
+            style={{ left:-48, bottom:25}}
           />
         </View>
         <Text
@@ -104,7 +106,7 @@ function LoginScreen({ navigation }) {
               paddingVertical: 10,
             }}
           >
-            <GoogleSVG height={24} width={24} />
+            <GoogleSVG style={{resizeMode:'contain'}} height={24} width={24} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {}}
@@ -128,7 +130,7 @@ function LoginScreen({ navigation }) {
               paddingVertical: 10,
             }}
           >
-            <TwitterSVG height={24} width={24} />
+            <TwitterSVG height={30} width={30} />
           </TouchableOpacity>
         </View>
 
@@ -136,16 +138,16 @@ function LoginScreen({ navigation }) {
           style={{
             flexDirection: "row",
             justifyContent: "center",
-            marginBottom:30,
-          }}>
+            marginBottom: 30,
+          }}
+        >
           <Text>New to the app? </Text>
           <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-            <Text style={{ color: "#AD40AF", fontWeight: "700"}}>
+            <Text style={{ color: "#AD40AF", fontWeight: "700" }}>
               Register
             </Text>
           </TouchableOpacity>
         </View>
-
       </View>
     </SafeAreaView>
   );
