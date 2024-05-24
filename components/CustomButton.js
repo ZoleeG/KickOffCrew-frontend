@@ -14,7 +14,6 @@ export default function CustomButton({label, onPress}) {
         >
           <Text
             style={{
-              color: "#AD40AF",
               fontWeight: "700",
               fontSize: 16,
               color: "#fff",

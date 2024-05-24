@@ -1,12 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
-
+import { View, Text, TouchableOpacity, ScrollView, Image} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import FacebookSVG from "./svgs/FacebookSVG";
-import GoogleSVG from "./svgs/GoogleSVG";
-import TwitterSVG from "./svgs/TwitterSVG";
 import InputField from "./InputField";
 import CustomButton from "./CustomButton";
 
@@ -46,7 +42,6 @@ function RegisterScreen({ navigation }) {
     <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{  }}
       >
         <View style={{ alignItems: "center" }}>
           <Image
@@ -61,18 +56,19 @@ function RegisterScreen({ navigation }) {
             fontWeight: "500",
             color: "#333",
             marginBottom: 30,
-            paddingHorizontal: 25
+            paddingHorizontal: 25,
+            
           }}
         >
           Register
         </Text>
-
+          
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
             marginBottom: 30,
-            paddingHorizontal: 25
+            paddingHorizontal: 25,
           }}
         >
           <TouchableOpacity
@@ -85,7 +81,9 @@ function RegisterScreen({ navigation }) {
               paddingVertical: 10,
             }}
           >
-            <GoogleSVG height={24} width={24} />
+            <Image
+            source={require("../assets/images/google-icon.png")} style={{width:24,height:24 }}
+          />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {}}
@@ -97,7 +95,9 @@ function RegisterScreen({ navigation }) {
               paddingVertical: 10,
             }}
           >
-            <FacebookSVG height={24} width={24} />
+            <Image
+            source={require("../assets/images/facebook-icon.png")} style={{width:24,height:24 }}
+          />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {}}
@@ -109,7 +109,9 @@ function RegisterScreen({ navigation }) {
               paddingVertical: 10,
             }}
           >
-            <TwitterSVG height={24} width={24} />
+            <Image
+            source={require("../assets/images/twitter-icon.png")} style={{width:24,height:24 }}
+          />
           </TouchableOpacity>
         </View>
 
@@ -204,8 +206,7 @@ function RegisterScreen({ navigation }) {
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "center",
-              marginBottom: 30,
+              justifyContent: "center"
             }}
           >
             <Text>Already registered? </Text>

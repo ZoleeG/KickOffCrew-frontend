@@ -6,7 +6,6 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import Gaming from "./svgs/Gaming";
 
 SplashScreen.preventAutoHideAsync();
 

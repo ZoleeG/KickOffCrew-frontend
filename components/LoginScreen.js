@@ -2,16 +2,12 @@ import * as React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import InputField from "./InputField";
 
-import LoginSVG from "./svgs/LoginSVG";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import FacebookSVG from "./svgs/FacebookSVG";
-import GoogleSVG from "./svgs/GoogleSVG";
-import TwitterSVG from "./svgs/TwitterSVG";
 import CustomButton from "./CustomButton";
 
-import {useFonts } from "expo-font";
+import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 
@@ -39,9 +35,9 @@ function LoginScreen({ navigation }) {
     >
       <View style={{ paddingHorizontal: 25 }}>
         <View style={{ alignItems: "center" }}>
-          <Image source={require('../assets/images/volleyball.jpg')}
-            
-            style={{ left:-48, bottom:25}}
+          <Image
+            source={require("../assets/images/volleyball1.jpg")}
+            style={{ width: "120%" }}
           />
         </View>
         <Text
@@ -89,6 +85,7 @@ function LoginScreen({ navigation }) {
         <Text style={{ textAlign: "center", color: "#666", marginBottom: 30 }}>
           Or, Login with ...
         </Text>
+
         <View
           style={{
             flexDirection: "row",
@@ -106,8 +103,12 @@ function LoginScreen({ navigation }) {
               paddingVertical: 10,
             }}
           >
-            <GoogleSVG style={{resizeMode:'contain'}} height={24} width={24} />
+            <Image
+              source={require("../assets/images/google-icon.png")}
+              style={{ width: 24, height: 24 }}
+            />
           </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() => {}}
             style={{
@@ -118,8 +119,12 @@ function LoginScreen({ navigation }) {
               paddingVertical: 10,
             }}
           >
-            <FacebookSVG height={24} width={24} />
+            <Image
+              source={require("../assets/images/facebook-icon.png")}
+              style={{ width: 24, height: 24 }}
+            />
           </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() => {}}
             style={{
@@ -130,7 +135,10 @@ function LoginScreen({ navigation }) {
               paddingVertical: 10,
             }}
           >
-            <TwitterSVG height={30} width={30} />
+            <Image
+              source={require("../assets/images/twitter-icon.png")}
+              style={{ width: 24, height: 24 }}
+            />
           </TouchableOpacity>
         </View>
 
@@ -138,7 +146,7 @@ function LoginScreen({ navigation }) {
           style={{
             flexDirection: "row",
             justifyContent: "center",
-            marginBottom: 30,
+            marginBottom: 80,
           }}
         >
           <Text>New to the app? </Text>
