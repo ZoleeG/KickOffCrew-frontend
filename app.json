@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./src/assets/images/basketball.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -15,7 +15,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     }
