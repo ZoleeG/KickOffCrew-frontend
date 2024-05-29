@@ -5,22 +5,36 @@ const backendApi = axios.create({
 });
 
 export const fetchUsers = () => {
-  return backendApi.get('/users').then((res) => {
+  return backendApi.get("/users").then((res) => {
     return res.data.users;
   });
 };
 
 export const fetchEvents = () => {
-  return backendApi.get('/events').then((res) => {
+  return backendApi.get("/events").then((res) => {
     return res.data.events;
   });
 };
 
-export const postUser = (username, first_name, last_name, age, avatar_url, interests) => {
-  return backendApi.post('/users', {username, first_name, last_name, age, avatar_url, interests }).then((res)=>{ 
-    return res.data.user;
-  }).catch((err)=>{
-    console.log(err)
-    
-  })
+export const postUser = (
+  username,
+  first_name,
+  last_name,
+  age,
+  avatar_url,
+  interests
+) => {
+  return backendApi
+    .post("/users", {
+      username,
+      first_name,
+      last_name,
+      age,
+      avatar_url,
+      interests,
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {});
 };

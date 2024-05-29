@@ -11,7 +11,10 @@ function AuthStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Onboarding" component={OnboardingScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
+      <Stack.Screen
+        name="RegistrationScreen"
+        component={RegistrationScreen}
+      />
     </Stack.Navigator>
   );
 }
