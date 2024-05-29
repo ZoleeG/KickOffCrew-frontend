@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { initializeAuth, getReactNativePersistence } from "firebase/auth";
+import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -11,12 +12,12 @@ const firebaseConfig = {
   projectId: "kickoffcrew-fe",
   storageBucket: "kickoffcrew-fe.appspot.com",
   messagingSenderId: "948813811410",
-  appId: "1:948813811410:web:912586e2d0e45812b3270b"
+  appId: "1:948813811410:web:912586e2d0e45812b3270b",
 };
 
 // Initialize Firebase
 export const FIREBASE_APP = initializeApp(firebaseConfig);
 
-// Initialize Firebase Authentication and get a reference to the service
-export const FIREBASE_AUTH = getAuth(FIREBASE_APP);
-
+export const FIREBASE_AUTH = initializeAuth(FIREBASE_APP, {
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+});
