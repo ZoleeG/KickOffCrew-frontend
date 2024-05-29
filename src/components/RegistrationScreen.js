@@ -20,6 +20,7 @@ import { postUser } from "../../utils/ApiRequests";
 import { Feather } from "@expo/vector-icons";
 
 function RegistrationScreen({ navigation }) {
+  const [hidePassword, setHidePassword] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -183,13 +184,34 @@ function RegistrationScreen({ navigation }) {
 
               <TextInput
                 style={{ flex: 1 }}
-                secureTextEntry={true}
+                secureTextEntry={hidePassword}
                 value={password}
                 placeholder={"password"}
                 autoCapitalize="none"
                 onChangeText={(text) => setPassword(text)}
                 inputType="password"
               />
+              {hidePassword ? (
+                <Feather
+                  onPress={() => {
+                    setHidePassword(!hidePassword);
+                  }}
+                  name="eye"
+                  size={20}
+                  color="#666"
+                  style={{ marginRight: 5 }}
+                />
+              ) : (
+                <Feather
+                  onPress={() => {
+                    setHidePassword(!hidePassword);
+                  }}
+                  name="eye-off"
+                  size={20}
+                  color="#666"
+                  style={{ marginRight: 5 }}
+                />
+              )}
             </View>
             <View
               style={{
