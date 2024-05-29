@@ -23,11 +23,11 @@ function RegistrationScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const auth = FIREBASE_AUTH;
-  const [userName, setUserName] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [avatarURL, setAvatarURL] = useState("");
-  const [age, setAge] = useState();
+  const [username, setUsername] = useState("");
+  const [first_name, setFirst_name] = useState("");
+  const [last_name, setLast_name] = useState("");
+  const [avatar_url, setAvatar_url] = useState("");
+  const [age, setAge] = useState(0);
   const [interests, setInterests] = useState("")
 
 
@@ -39,9 +39,9 @@ function RegistrationScreen({ navigation }) {
         email,
         password
       );
-      const userCreated = await postUser(userName,firstName,lastName,avatarURL,+age,interests)
+      const userCreated = await postUser(username, first_name, last_name, +age, avatar_url, interests)
       console.log('regscreen '+userCreated)
-      
+    
       alert("Check your email");
     } catch (error) {
       alert("SignUp failed: " + error.message);
@@ -196,12 +196,12 @@ function RegistrationScreen({ navigation }) {
             />
           }
           <TextInput
-            value={userName}
+            value={username}
             style={{ flex: 1 }}
             placeholder="username"
             keyboardType="username"
             autoCapitalize="none"
-            onChangeText={(text) => setUserName(text)}
+            onChangeText={(text) => setUsername(text)}
           />
         </View>
         <View
@@ -215,9 +215,9 @@ function RegistrationScreen({ navigation }) {
         >
           <TextInput
             style={{ flex: 1 }}
-            value={firstName}
+            value={first_name}
             placeholder={"first-name"}
-            onChangeText={(text) => setFirstName(text)}
+            onChangeText={(text) => setFirst_name(text)}
           />
           </View>
           <View
@@ -229,10 +229,10 @@ function RegistrationScreen({ navigation }) {
             marginBottom: 25,
           }}>
           <TextInput
-            value={lastName}
+            value={last_name}
             style={{ flex: 1 }}
             placeholder="last-name"
-            onChangeText={(text) => setLastName(text)}
+            onChangeText={(text) => setLast_name(text)}
           />
         </View>
         <View
@@ -246,9 +246,9 @@ function RegistrationScreen({ navigation }) {
         >
           <TextInput
             style={{ flex: 1 }}
-            value={avatarURL}
+            value={avatar_url}
             placeholder={"avatarURL"}
-            onChangeText={(text) => setAvatarURL(text)}
+            onChangeText={(text) => setAvatar_url(text)}
           />
           </View>
           <View

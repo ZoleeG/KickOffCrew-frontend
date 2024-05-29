@@ -16,10 +16,8 @@ export const fetchEvents = () => {
   });
 };
 
-export const postUser = (userName, firstName, lastName, avatarURL, age, interests) => {
-  return backendApi.post('/users', {userName, firstName, lastName, avatarURL, age, interests }).then((res)=>{
-    console.log('apireq '+res.data)
-    
+export const postUser = (username, first_name, last_name, age, avatar_url, interests) => {
+  return backendApi.post('/users', {username, first_name, last_name, age, avatar_url, interests }).then((res)=>{ 
     return res.data.user;
   }).catch((err)=>{
     console.log(err)
