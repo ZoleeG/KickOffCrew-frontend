@@ -23,18 +23,28 @@ import CustomButton from "./CustomButton";
 function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("")
+  const [passwordError, setPasswordError] = useState("")
   const [isLoading, setIsLoading] = useState(false);
   const auth = FIREBASE_AUTH;
 
   const signIn = async () => {
-    setIsLoading(true);
+  setEmailError("")
+  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    setEmailError("valid email required")
+  } else if (!password) {
+    setPasswordError("password required")
+  }
+  else {
     try {
+      setIsLoading(true);
       const response = await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
       alert("Sign in failed: " + error.message);
     } finally {
       setIsLoading(false);
     }
+  }
   };
 
   return (
@@ -81,6 +91,7 @@ function LoginScreen({ navigation }) {
             autoCapitalize="none"
             onChangeText={(text) => setEmail(text)}
           />
+          {emailError && <Text style={{ color: "red" }}>{emailError}</Text>}
         </View>
         <View
           style={{
@@ -107,7 +118,7 @@ function LoginScreen({ navigation }) {
             onChangeText={(text) => setPassword(text)}
             inputType="password"
           />
-
+           {passwordError && <Text style={{ color: "red", marginRight: 2}}>{passwordError}</Text>}
           <TouchableOpacity onPress={() => {}}>
             <Text
               style={{
