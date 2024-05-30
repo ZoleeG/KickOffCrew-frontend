@@ -81,8 +81,8 @@ function RegistrationScreen({ navigation }) {
         console.log("regscreen " + userCreated);
 
         alert("Check your email");
-      } catch (err) {
-        alert("SignUp failed: " + Error);
+      } catch (error) {
+        alert("SignUp failed: " + error.message);
       } finally {
         setIsLoading(false);
       }
@@ -221,8 +221,8 @@ function RegistrationScreen({ navigation }) {
               inputType="password"
             />
             {{ passwordError } && (
-                <Text style={{ color: "red" }}>{passwordError}</Text>
-              )}
+              <Text style={{ color: "red" }}>{passwordError}</Text>
+            )}
             {hidePassword ? (
               <Feather
                 onPress={() => {
@@ -338,6 +338,7 @@ function RegistrationScreen({ navigation }) {
             }}
           >
             <TextInput
+              keyboardType="numeric"
               style={{ flex: 1 }}
               value={age}
               placeholder={"age"}
