@@ -40,6 +40,8 @@ function RegistrationScreen({ navigation }) {
   const [lastNameError, setLastNameError] = useState("");
   const [ageError, setAgeError] = useState();
   const [interestsError, setInterestsError] = useState("");
+  const [incorrect, setIncorrect] = useState(false)
+  const [regError, setRegError] = useState(null)
 
   const [date, setDate] = useState(new Date(1598051730000));
   const [dobLabel, setdobLabel] = useState("Date of Birth");
@@ -58,8 +60,8 @@ function RegistrationScreen({ navigation }) {
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setDate(currentDate);
-    setdobLabel(currentDate.toLocaleDateString());
     setAge(getAge(currentDate));
+    setdobLabel(currentDate.toLocaleDateString());
   };
 
   const showMode = (currentMode) => {
@@ -106,6 +108,7 @@ function RegistrationScreen({ navigation }) {
       setInterestsError("interests cannot be blank");
     } else {
       try {
+        setIncorrect(false)
         setIsLoading(true);
         const response = await createUserWithEmailAndPassword(
           auth,
@@ -120,11 +123,9 @@ function RegistrationScreen({ navigation }) {
           avatar_url,
           interests
         );
-        console.log("regscreen " + userCreated);
-
-        alert("Check your email");
       } catch (error) {
-        alert("SignUp failed: " + error.message);
+        setIncorrect(true)
+        setRegError("SignUp failed: " + error.message)
       } finally {
         setIsLoading(false);
       }
@@ -207,7 +208,15 @@ function RegistrationScreen({ navigation }) {
               />
             </TouchableOpacity>
           </View>
-
+          {incorrect && <View
+          style={{
+            flexDirection: "row",
+            paddingBottom: 8,
+            marginBottom: 25,
+          }}
+        >
+          <Text style={{ color: "red", marginRight: 2 }}>{regError}</Text>
+          </View>}
           <View
             style={{
               flexDirection: "row",
@@ -376,111 +385,45 @@ function RegistrationScreen({ navigation }) {
               borderBottomColor: "#ccc",
               borderBottomWidth: 1,
               paddingBottom: 8,
-              marginBottom: 30,
+              marginBottom: 25,
             }}
           >
-            <AntDesign
-              name="calendar"
-              size={20}
-              color="#666"
-              style={{ marginRight: 5 }}
+            <TextInput
+              style={{ flex: 1 }}
+              value={interests}
+              placeholder={"interests"}
+              onChangeText={(text) => setInterests(text)}
             />
-            <TouchableOpacity onPress={showDatepicker} title="Date of Birth">
+          </View>
+          {{ interestsError } && (
+            <Text style={{ color: "red" }}>{interestsError}</Text>
+          )}
+          <View
+            style={{
+              flexDirection: "row",
+              borderBottomColor: "#ccc",
+              borderBottomWidth: 1,
+              paddingBottom: 8,
+              marginBottom: 25,
+            }}
+          >
+            <TouchableOpacity
+              style={{ flexDirection: "row" }}
+              onPress={showDatepicker}
+              title="Date of Birth"
+            >
+              <AntDesign
+                name="calendar"
+                size={20}
+                color="#666"
+                style={{ marginRight: 5, marginTop: 2 }}
+              />
               <Text style={{ color: "#666", marginLeft: 5, marginTop: 5 }}>
                 {dobLabel}
               </Text>
             </TouchableOpacity>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "#ccc",
-              borderBottomWidth: 1,
-              paddingBottom: 8,
-              marginBottom: 25,
-            }}
-          >
-            <Text style={{ color: "#666", marginLeft: 5, marginTop: 5 }}>
-              Age: {age}
-            </Text>
-            {{ ageError } && <Text style={{ color: "red" }}>{ageError}</Text>}
-          </View>
-          <View
-          style={{paddingBottom: 8,
-              marginBottom: 25,}} >
-            <Text style={{ color: "#666" }}>Please select your interests</Text>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              paddingBottom: 8,
-              marginBottom: 25,
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                borderColor: "#ddd",
-                borderWidth: 2,
-                borderRadius: 10,
-                paddingHorizontal: 30,
-                paddingVertical: 10,
-              }}
-              onPress={
-                interests.length !== 0
-                  ? () => setInterests((a) => a + ", badminton")
-                  : () => setInterests("badminton")
-              }
-            >
-              <Text style={{ color: "#666" }}>badminton</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                borderColor: "#ddd",
-                borderWidth: 2,
-                borderRadius: 10,
-                paddingHorizontal: 30,
-                paddingVertical: 10,
-              }}
-              onPress={
-                interests.length !== 0
-                  ? () => setInterests((a) => a + ", golf")
-                  : () => setInterests("golf")
-              }
-            >
-              <Text style={{ color: "#666" }}>golf</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                borderColor: "#ddd",
-                borderWidth: 2,
-                borderRadius: 10,
-                paddingHorizontal: 30,
-                paddingVertical: 10,
-              }}
-              onPress={
-                interests.length !== 0
-                  ? () => setInterests((a) => a + ", basketball")
-                  : () => setInterests("basketball")
-              }
-            >
-              <Text style={{ color: "#666" }}>basketball</Text>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              borderBottomColor: "#ccc",
-              borderBottomWidth: 1,
-              paddingBottom: 8,
-              marginBottom: 25,
-            }}
-          >
-            <Text style={{ color: "#666" }}>Interests: {interests}</Text>
-
-            {{ interestsError } && (
-              <Text style={{ color: "red" }}>{interestsError}</Text>
-            )}
-          </View>
+          {{ ageError } && <Text style={{ color: "red" }}>{ageError}</Text>}
 
           {isLoading ? (
             <ActivityIndicator size="large" color="#0000ff" />
@@ -496,7 +439,10 @@ function RegistrationScreen({ navigation }) {
             }}
           >
             <Text>Already registered? </Text>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity
+              style={{ marginBottom: 50 }}
+              onPress={() => navigation.goBack()}
+            >
               <Text style={{ color: "#AD40AF", fontWeight: "700" }}>Login</Text>
             </TouchableOpacity>
           </View>

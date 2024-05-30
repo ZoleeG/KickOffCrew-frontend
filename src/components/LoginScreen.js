@@ -5,43 +5,50 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
-import {
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import CustomButton from "./CustomButton";
+import { Feather } from "@expo/vector-icons";
 
 function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("")
-  const [passwordError, setPasswordError] = useState("")
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const auth = FIREBASE_AUTH;
+  const [hidePassword, setHidePassword] = useState(true);
+  const [incorrect, setIncorrect] = useState(false)
+  const [loginError, setLoginError] = useState(null)
 
   const signIn = async () => {
-  setEmailError("")
-  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-    setEmailError("valid email required")
-  } else if (!password) {
-    setPasswordError("password required")
-  }
-  else {
-    try {
-      setIsLoading(true);
-      const response = await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      alert("Sign in failed: " + error.message);
-    } finally {
-      setIsLoading(false);
+    setEmailError("");
+    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      setEmailError("valid email required");
+    } else if (!password) {
+      setPasswordError("password required");
+    } else {
+      try {
+        setIncorrect(false)
+        setIsLoading(true);
+        const response = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+      } catch (error) {
+        setIncorrect(true)
+        setLoginError("Sign in failed: " + error.message)
+      } finally {
+        setIsLoading(false);
+      }
     }
-  }
   };
 
   return (
@@ -108,26 +115,61 @@ function LoginScreen({ navigation }) {
 
           <TextInput
             style={{ flex: 1 }}
-            secureTextEntry={true}
+            secureTextEntry={hidePassword}
             value={password}
             placeholder={"password"}
             autoCapitalize="none"
             onChangeText={(text) => setPassword(text)}
             inputType="password"
           />
-           {passwordError && <Text style={{ color: "red", marginRight: 2}}>{passwordError}</Text>}
+          {passwordError && (
+            <Text style={{ color: "red", marginRight: 2 }}>
+              {passwordError}
+            </Text>
+          )}
           <TouchableOpacity onPress={() => {}}>
             <Text
               style={{
                 color: "#AD40AF",
                 fontWeight: "700",
                 textAlign: "right",
+                marginRight: 15,
               }}
             >
               Forgot?
             </Text>
           </TouchableOpacity>
+          {hidePassword ? (
+            <Feather
+              onPress={() => {
+                setHidePassword(!hidePassword);
+              }}
+              name="eye"
+              size={20}
+              color="#666"
+              style={{ marginRight: 5 }}
+            />
+          ) : (
+            <Feather
+              onPress={() => {
+                setHidePassword(!hidePassword);
+              }}
+              name="eye-off"
+              size={20}
+              color="#666"
+              style={{ marginRight: 5 }}
+            />
+          )}
         </View>
+        {incorrect && <View
+          style={{
+            flexDirection: "row",
+            paddingBottom: 8,
+            marginBottom: 25,
+          }}
+        >
+          <Text style={{ color: "red", marginRight: 2 }}>{loginError}</Text>
+          </View>}
         {isLoading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
