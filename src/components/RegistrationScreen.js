@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   Text,
@@ -7,7 +7,6 @@ import {
   TextInput,
   ActivityIndicator,
   ScrollView,
-  StyleSheet,
 } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,6 +17,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import CustomButton from "./CustomButton";
 import { postUser } from "../../utils/ApiRequests";
 import { Feather } from "@expo/vector-icons";
+import { Picker } from "@react-native-picker/picker";
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 
 function RegistrationScreen({ navigation }) {
   const [hidePassword, setHidePassword] = useState(true);
@@ -39,6 +40,47 @@ function RegistrationScreen({ navigation }) {
   const [lastNameError, setLastNameError] = useState("");
   const [ageError, setAgeError] = useState();
   const [interestsError, setInterestsError] = useState("");
+
+  const [date, setDate] = useState(new Date(1598051730000));
+  const [dobLabel, setdobLabel] = useState("Date of Birth");
+
+  function getAge(dateString) {
+    const today = new Date();
+    const birthDate = new Date(dateString);
+    const age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setDate(currentDate);
+    setdobLabel(currentDate.toLocaleDateString())
+    setAge(getAge(currentDate))
+  };
+
+  const showMode = (currentMode) => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange,
+      mode: currentMode,
+      display: "spinner",
+      is24Hour: true,
+      maximumDate: new Date("2010-01-01"),
+      minimumDate: new Date("1920-01-01"),
+    });
+  };
+
+  const showDatepicker = () => {
+    showMode("date");
+  };
+
+  const showTimepicker = () => {
+    showMode("time");
+  };
 
   const signUp = async () => {
     setEmailError("");
@@ -286,7 +328,7 @@ function RegistrationScreen({ navigation }) {
             <TextInput
               style={{ flex: 1 }}
               value={first_name}
-              placeholder={"first-name"}
+              placeholder={"first name"}
               onChangeText={(text) => setFirst_name(text)}
             />
             {{ firstNameError } && (
@@ -305,7 +347,7 @@ function RegistrationScreen({ navigation }) {
             <TextInput
               value={last_name}
               style={{ flex: 1 }}
-              placeholder="last-name"
+              placeholder="last name"
               onChangeText={(text) => setLast_name(text)}
             />
             {{ lastNameError } && (
@@ -324,7 +366,7 @@ function RegistrationScreen({ navigation }) {
             <TextInput
               style={{ flex: 1 }}
               value={avatar_url}
-              placeholder={"avatarURL"}
+              placeholder={"avatar URL"}
               onChangeText={(text) => setAvatar_url(text)}
             />
           </View>
@@ -334,17 +376,20 @@ function RegistrationScreen({ navigation }) {
               borderBottomColor: "#ccc",
               borderBottomWidth: 1,
               paddingBottom: 8,
-              marginBottom: 25,
+              marginBottom: 30,
             }}
           >
-            <TextInput
-              keyboardType="numeric"
-              style={{ flex: 1 }}
-              value={age}
-              placeholder={"age"}
-              onChangeText={(text) => setAge(text)}
+            <AntDesign
+              name="calendar"
+              size={20}
+              color="#666"
+              style={{ marginRight: 5 }}
             />
-            {{ ageError } && <Text style={{ color: "red" }}>{ageError}</Text>}
+            <TouchableOpacity onPress={showDatepicker} title="Date of Birth">
+              <Text style={{ color: "#666", marginLeft: 5, marginTop: 5 }}>
+                {dobLabel}
+              </Text>
+            </TouchableOpacity>
           </View>
           <View
             style={{
@@ -355,12 +400,68 @@ function RegistrationScreen({ navigation }) {
               marginBottom: 25,
             }}
           >
-            <TextInput
-              style={{ flex: 1 }}
-              value={interests}
-              placeholder={"interests"}
-              onChangeText={(text) => setInterests(text)}
-            />
+            <Text style={{ color: "#666", marginLeft: 5, marginTop: 5 }}>Age: {age}</Text>
+            {{ ageError } && <Text style={{ color: "red" }}>{ageError}</Text>}
+          </View>
+
+          <View
+            style={{
+              borderBottomColor: "#ccc",
+              borderBottomWidth: 1,
+              paddingBottom: 8,
+              marginBottom: 25,
+            }}
+          >
+            <Picker
+              style={{
+                color: "#666",
+                fontSize: 12,
+              }}
+              selectedValue={interests}
+              onValueChange={(itemValue, itemIndex) => setInterests(itemValue)}
+            >
+              <Picker.Item
+                style={{
+                  color: "#ccc",
+                  fontSize: 16,
+                }}
+                label="select interests from list"
+                value=""
+              />
+              <Picker.Item
+                style={{
+                  color: "#666",
+                  fontSize: 16,
+                }}
+                label="badminton"
+                value="badminton"
+              />
+              <Picker.Item
+                style={{
+                  color: "#666",
+                  fontSize: 16,
+                }}
+                label="basketball"
+                value="basketball"
+              />
+              <Picker.Item
+                style={{
+                  color: "#666",
+                  fontSize: 16,
+                }}
+                label="golf"
+                value="golf"
+              />
+              <Picker.Item
+                style={{
+                  color: "#666",
+                  fontSize: 16,
+                }}
+                label="all of the above"
+                value="badminton, basketball, golf"
+              />
+            </Picker>
+
             {{ interestsError } && (
               <Text style={{ color: "red" }}>{interestsError}</Text>
             )}
