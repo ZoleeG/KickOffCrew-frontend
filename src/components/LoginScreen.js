@@ -5,9 +5,7 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  ActivityIndicator,
-  Button,
-  KeyboardAvoidingView,
+  ActivityIndicator
 } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,7 +13,6 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 import {
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import CustomButton from "./CustomButton";

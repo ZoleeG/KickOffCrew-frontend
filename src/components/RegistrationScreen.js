@@ -50,16 +50,16 @@ function RegistrationScreen({ navigation }) {
     const age = today.getFullYear() - birthDate.getFullYear();
     const m = today.getMonth() - birthDate.getMonth();
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
+      age--;
     }
     return age;
-}
+  }
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setDate(currentDate);
-    setdobLabel(currentDate.toLocaleDateString())
-    setAge(getAge(currentDate))
+    setdobLabel(currentDate.toLocaleDateString());
+    setAge(getAge(currentDate));
   };
 
   const showMode = (currentMode) => {
@@ -400,10 +400,73 @@ function RegistrationScreen({ navigation }) {
               marginBottom: 25,
             }}
           >
-            <Text style={{ color: "#666", marginLeft: 5, marginTop: 5 }}>Age: {age}</Text>
+            <Text style={{ color: "#666", marginLeft: 5, marginTop: 5 }}>
+              Age: {age}
+            </Text>
             {{ ageError } && <Text style={{ color: "red" }}>{ageError}</Text>}
           </View>
-
+          <View
+          style={{paddingBottom: 8,
+              marginBottom: 25,}} >
+            <Text style={{ color: "#666" }}>Please select your interests</Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingBottom: 8,
+              marginBottom: 25,
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                borderColor: "#ddd",
+                borderWidth: 2,
+                borderRadius: 10,
+                paddingHorizontal: 30,
+                paddingVertical: 10,
+              }}
+              onPress={
+                interests.length !== 0
+                  ? () => setInterests((a) => a + ", badminton")
+                  : () => setInterests("badminton")
+              }
+            >
+              <Text style={{ color: "#666" }}>badminton</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                borderColor: "#ddd",
+                borderWidth: 2,
+                borderRadius: 10,
+                paddingHorizontal: 30,
+                paddingVertical: 10,
+              }}
+              onPress={
+                interests.length !== 0
+                  ? () => setInterests((a) => a + ", golf")
+                  : () => setInterests("golf")
+              }
+            >
+              <Text style={{ color: "#666" }}>golf</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                borderColor: "#ddd",
+                borderWidth: 2,
+                borderRadius: 10,
+                paddingHorizontal: 30,
+                paddingVertical: 10,
+              }}
+              onPress={
+                interests.length !== 0
+                  ? () => setInterests((a) => a + ", basketball")
+                  : () => setInterests("basketball")
+              }
+            >
+              <Text style={{ color: "#666" }}>basketball</Text>
+            </TouchableOpacity>
+          </View>
           <View
             style={{
               borderBottomColor: "#ccc",
@@ -412,55 +475,7 @@ function RegistrationScreen({ navigation }) {
               marginBottom: 25,
             }}
           >
-            <Picker
-              style={{
-                color: "#666",
-                fontSize: 12,
-              }}
-              selectedValue={interests}
-              onValueChange={(itemValue, itemIndex) => setInterests(itemValue)}
-            >
-              <Picker.Item
-                style={{
-                  color: "#ccc",
-                  fontSize: 16,
-                }}
-                label="select interests from list"
-                value=""
-              />
-              <Picker.Item
-                style={{
-                  color: "#666",
-                  fontSize: 16,
-                }}
-                label="badminton"
-                value="badminton"
-              />
-              <Picker.Item
-                style={{
-                  color: "#666",
-                  fontSize: 16,
-                }}
-                label="basketball"
-                value="basketball"
-              />
-              <Picker.Item
-                style={{
-                  color: "#666",
-                  fontSize: 16,
-                }}
-                label="golf"
-                value="golf"
-              />
-              <Picker.Item
-                style={{
-                  color: "#666",
-                  fontSize: 16,
-                }}
-                label="all of the above"
-                value="badminton, basketball, golf"
-              />
-            </Picker>
+            <Text style={{ color: "#666" }}>Interests: {interests}</Text>
 
             {{ interestsError } && (
               <Text style={{ color: "red" }}>{interestsError}</Text>
